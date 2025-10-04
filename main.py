@@ -1,4 +1,5 @@
 from random import choice, shuffle
+import sys
 alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
 symbols = "!@#$%^&*()_+-=|;:,.<>?/~`"
 
@@ -7,19 +8,21 @@ letters_num = int(input("How many letters would you like in your password? "))
 symbols_num = int(input("How many symbols would you like? "))
 numbers_num = int(input("How many numbers would you like? "))
 
-generated_password = ""
+password = []
+
+if symbols_num + numbers_num > letters_num:
+    sys.exit("The combined number of symbols and digits cannot exceed the number of letters.")
 
 for _ in range(symbols_num):
-    generated_password += choice(symbols)
+    password.append(choice(symbols))
 
 for _ in range(numbers_num):
-    generated_password += str(choice(range(9)))
+    password.append(str(choice(range(10))))
 
-while len(generated_password) < letters_num:
-    generated_password += choice(alphabet)
+while len(password) < letters_num:
+    password.append(choice(alphabet))
 
-generated_password_list = list(generated_password)
-shuffle(generated_password_list)
-generated_password = "".join(generated_password_list)
+shuffle(password)
+generated_password = "".join(password)
 
 print(f"Here is your password: '{generated_password}'")
